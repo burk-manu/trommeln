@@ -6,29 +6,29 @@ class Application:
     def __init__(self, root):
         self.root = root
         self.root.title("Trommeln")
-        self.root.state('zoomed')
         
         # Display initial "Start" text and center it in the window.
         self.label = tk.Label(root, text="Start", width=22, font=("Helvetica Neue", 168))
         self.label.pack(expand=True, anchor="center")
         
         # Sequential list of songs
-        self.songs = ["Caipirinha", "Cuba Libre", "Daiquiri", "Gin Tonic", 
+        self.songs_main = ["Caipirinha", "Cuba Libre", "Daiquiri", "Gin Tonic", 
                       "Margarita", "Mojito Cocco", "Pina Colada", "Tequila Sunrise"]
         
-        # Countdown duration (in seconds)
-        self.countdown_time = 5
-        
-        # Bind the space key to the start method
+
         self.root.bind("<space>", self.start)
         
-        self.delay = 10000
+        self.delay = 100
+        self.running = False
     
     def start(self, event=None):
-        # Unbind the space key to avoid multiple triggers
-        self.root.unbind("<space>")
-        # Start the countdown
-        self.countdown()
+        if self.running == False:
+            self.running = True
+            
+            self.countdown_time = 5
+            self.songs = list(self.songs_main)
+            
+            self.countdown()
     
     def countdown(self):
         if self.countdown_time > 0:
@@ -45,14 +45,17 @@ class Application:
             self.song_index = self.songs.index(self.song)
             self.songs.pop(self.song_index)
             self.label.config(text=self.song)
-            if self.delay == 10000:
+            if self.delay == 100:
                 self.root.after(self.delay, self.show_next_song)
-                self.delay = 20000
+                self.delay = 200
             else:
                 self.root.after(self.delay, self.show_next_song)
 
         else:
             self.label.config(text="You're Done")
+            self.running = False
+            
+
 
 if __name__ == "__main__":
     root = tk.Tk()
