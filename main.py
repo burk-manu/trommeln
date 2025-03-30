@@ -8,7 +8,7 @@ class Application:
         self.root.title("Trommeln")
         
         # Display initial "Start" text and center it in the window.
-        self.label = tk.Label(root, text="Start", width=22, font=("Helvetica Neue", 168))
+        self.label = tk.Label(root, text="Start", width=22, font=("Helvetica Neue", 96))
         self.label.pack(expand=True, anchor="center")
         
         # Sequential list of songs
