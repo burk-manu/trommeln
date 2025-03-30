@@ -18,7 +18,7 @@ class Application:
 
         self.root.bind("<space>", self.start)
         
-        self.delay = 100
+        self.delay = 10000
         self.running = False
     
     def start(self, event=None):
@@ -45,9 +45,9 @@ class Application:
             self.song_index = self.songs.index(self.song)
             self.songs.pop(self.song_index)
             self.label.config(text=self.song)
-            if self.delay == 100:
+            if self.delay == 10000:
                 self.root.after(self.delay, self.show_next_song)
-                self.delay = 200
+                self.delay = 20000
             else:
                 self.root.after(self.delay, self.show_next_song)
 
