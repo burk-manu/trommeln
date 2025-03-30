@@ -20,6 +20,7 @@ class Application:
         
         self.delay = 10000
         self.running = False
+        self.color = "blue"
     
     def start(self, event=None):
         if self.running == False:
@@ -32,7 +33,7 @@ class Application:
     
     def countdown(self):
         if self.countdown_time > 0:
-            self.label.config(text=str(self.countdown_time))
+            self.label.config(text=str(self.countdown_time), fg=("black" if self.countdown_time > 3 else "red"))
             self.countdown_time -= 1
             self.root.after(1000, self.countdown)
         else:
@@ -44,15 +45,19 @@ class Application:
             self.song = random.choice(self.songs)
             self.song_index = self.songs.index(self.song)
             self.songs.pop(self.song_index)
-            self.label.config(text=self.song)
+            self.label.config(text=self.song, fg=self.color)
             if self.delay == 10000:
                 self.root.after(self.delay, self.show_next_song)
                 self.delay = 20000
             else:
                 self.root.after(self.delay, self.show_next_song)
+            if self.color == "blue":
+                self.color = "green"
+            else:
+                self.color = "blue"
 
         else:
-            self.label.config(text="You're Done")
+            self.label.config(text="You're Done", fg="black")
             self.running = False
             
 
