@@ -9,17 +9,21 @@ class SongTimerApp:
     def __init__(self, root: tk.Tk):
         self.root = root
         self.root.title("Song Timer")
+        self.root.config(bg="#121212")
         
         # Main label to display the countdown and song names
         self.song_label = tk.Label(root, text="Start", width=22, font=("Helvetica Neue", 96))
+        self.song_label.config(bg="#121212", fg="#8EADDB")
         self.song_label.pack(expand=True, anchor="center")
         
         # Label for the countdown timer display
         self.timer_label = tk.Label(root, text="Timer", width=22, font=("Helvetica Neue", 26))
+        self.timer_label.config(bg="#121212", fg="#8EADDB")
         self.timer_label.pack(expand=True, anchor="e")
         
         # Label for song counter display
         self.counter_label = tk.Label(root, text="", width=22, font=("Helvetica Neue", 26))
+        self.counter_label.config(bg="#121212", fg="#8EADDB")
         self.counter_label.pack(expand=True, anchor="w")
         
         # List of available song names
@@ -36,14 +40,11 @@ class SongTimerApp:
         # Bind the spacebar key to start the countdown
         self.root.bind("<space>", self.start_countdown)
         
-        self.song_timer_delay = 10   # Initial timer delay in seconds for song display
+        self.song_timer_delay = 9    # Initial timer delay in seconds for song display
         self.is_running = False      # Flag indicating whether the app is currently running
-        self.current_color = "blue"  # Initial text color for song display
+        self.current_color = "#8EADDB"  # Initial text color for song display
 
     def start_countdown(self, event=None) -> None:
-        """
-        Starts the countdown if the application is not already running.
-        """
         if not self.is_running:
             self.is_running = True
             self.remaining_countdown = 5  # Countdown starting value in seconds
@@ -52,13 +53,9 @@ class SongTimerApp:
             self._update_countdown()
 
     def _update_countdown(self) -> None:
-        """
-        Updates the countdown display every second.
-        Changes text color to red when 3 seconds or less remain.
-        """
         if self.remaining_countdown > 0:
             # Use red for the final 3 seconds, black otherwise.
-            color = "red" if self.remaining_countdown <= 3 else "black"
+            color = "#8EADDB"
             self.song_label.config(text=str(self.remaining_countdown), fg=color)
             self.remaining_countdown -= 1
             self.root.after(1000, self._update_countdown)
@@ -66,19 +63,10 @@ class SongTimerApp:
             self._display_next_song()
 
     def _start_song_timer(self, duration: float) -> None:
-        """
-        Initializes and starts the timer for displaying the current song.
-        
-        Args:
-            duration: The duration in seconds for which the song should be displayed.
-        """
         self.song_timer_remaining = duration
         self._update_song_timer()
 
     def _update_song_timer(self) -> None:
-        """
-        Updates the timer display every 0.1 seconds and recursively continues until time runs out.
-        """
         if self.song_timer_remaining > 0:
             self.timer_label.config(text=f"{self.song_timer_remaining:.1f}")
             self.song_timer_remaining -= 0.1
@@ -87,11 +75,6 @@ class SongTimerApp:
             self._display_next_song()
 
     def _display_next_song(self) -> None:
-        """
-        Displays the next random song from the list if available.
-        Alternates the display color and starts a new timer.
-        Ends the session if no songs remain.
-        """
         if self.remaining_songs:
             # Increment song counter
             self.current_song_index += 1
@@ -105,17 +88,17 @@ class SongTimerApp:
             self.song_label.config(text=next_song, fg=self.current_color)
             
             # Toggle the text color between blue and green for variety.
-            self.current_color = "green" if self.current_color == "blue" else "blue"
+            self.current_color = "#D884BF" if self.current_color == "#8EADDB" else "#8EADDB"
             
             # Start the timer for the current song display.
             self._start_song_timer(self.song_timer_delay)
             
             # Optionally change the delay for subsequent songs.
-            if self.song_timer_delay == 10:
-                self.song_timer_delay = 20
+            if self.song_timer_delay == 9:
+                self.song_timer_delay = 19
         else:
             # No more songs available; end the session.
-            self.song_label.config(text="You're Done", fg="black")
+            self.song_label.config(text="You're Done", fg="#8EADDB")
             self.timer_label.config(text="")
             self.counter_label.config(text="")
             self.is_running = False
