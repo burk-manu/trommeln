@@ -2,10 +2,6 @@ import tkinter as tk
 import random
 
 class SongTimerApp:
-    """
-    A Tkinter-based application that displays a countdown and then shows random song names
-    from a predefined list with a timer for each song display.
-    """
     def __init__(self, root: tk.Tk):
         self.root = root
         self.root.title("Song Timer")
