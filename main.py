@@ -18,11 +18,20 @@ class SongTimerApp:
         self.timer_label = tk.Label(root, text="Timer", width=22, font=("Helvetica Neue", 26))
         self.timer_label.pack(expand=True, anchor="e")
         
+        # Label for song counter display
+        self.counter_label = tk.Label(root, text="", width=22, font=("Helvetica Neue", 26))
+        self.counter_label.pack(expand=True, anchor="w")
+        
         # List of available song names
         self.song_list = [
             "Caipirinha", "Cuba Libre", "Daiquiri", "Gin Tonic", 
             "Margarita", "Mojito Cocco", "Pina Colada", "Tequila Sunrise"
         ]
+        
+        # Total number of songs available
+        self.songs_total = len(self.song_list)
+        # Counter for the current song number
+        self.current_song_index = 0
         
         # Bind the spacebar key to start the countdown
         self.root.bind("<space>", self.start_countdown)
@@ -39,6 +48,7 @@ class SongTimerApp:
             self.is_running = True
             self.remaining_countdown = 5  # Countdown starting value in seconds
             self.remaining_songs = list(self.song_list)  # Create a copy of the song list
+            self.current_song_index = 0  # Reset song counter
             self._update_countdown()
 
     def _update_countdown(self) -> None:
@@ -83,6 +93,12 @@ class SongTimerApp:
         Ends the session if no songs remain.
         """
         if self.remaining_songs:
+            # Increment song counter
+            self.current_song_index += 1
+            
+            # Update the counter label with the current song number and total number of songs.
+            self.counter_label.config(text=f"{self.current_song_index}/{self.songs_total}")
+            
             # Randomly select a song and remove it from the remaining songs list.
             next_song = random.choice(self.remaining_songs)
             self.remaining_songs.remove(next_song)
@@ -101,6 +117,7 @@ class SongTimerApp:
             # No more songs available; end the session.
             self.song_label.config(text="You're Done", fg="black")
             self.timer_label.config(text="")
+            self.counter_label.config(text="")
             self.is_running = False
 
 if __name__ == "__main__":
