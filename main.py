@@ -1,6 +1,8 @@
 import tkinter as tk
 import random
 
+# Version 1.0.0
+
 class SongTimerApp:
     def __init__(self, root: tk.Tk):
         self.root = root
@@ -36,7 +38,7 @@ class SongTimerApp:
         # Bind the spacebar key to start the countdown
         self.root.bind("<space>", self.start_countdown)
         
-        self.song_timer_delay = 9    # Initial timer delay in seconds for song display
+        self.song_timer_delay = 8    # Initial timer delay in seconds for song display
         self.is_running = False      # Flag indicating whether the app is currently running
         self.current_color = "#8EADDB"  # Initial text color for song display
 
@@ -69,7 +71,7 @@ class SongTimerApp:
             self.root.after(100, self._update_song_timer)
         else:
             self._display_next_song()
-
+            
     def _display_next_song(self) -> None:
         if self.remaining_songs:
             # Increment song counter
@@ -90,8 +92,8 @@ class SongTimerApp:
             self._start_song_timer(self.song_timer_delay)
             
             # Optionally change the delay for subsequent songs.
-            if self.song_timer_delay == 9:
-                self.song_timer_delay = 19
+            if self.song_timer_delay == 8:
+                self.song_timer_delay = 16
         else:
             # No more songs available; end the session.
             self.song_label.config(text="You're Done", fg="#8EADDB")
@@ -103,4 +105,3 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = SongTimerApp(root)
     root.mainloop()
-
